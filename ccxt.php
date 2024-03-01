@@ -59,7 +59,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-require_once PATH_TO_CCXT . 'BaseError.php';
 require_once PATH_TO_CCXT . 'ExchangeError.php';
 require_once PATH_TO_CCXT . 'AuthenticationError.php';
 require_once PATH_TO_CCXT . 'PermissionDenied.php';
