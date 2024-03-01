@@ -11,12 +11,7 @@ if [ $# -gt 0 ]; then
   exit 7
 fi
 
-[[ -n "$TRAVIS_BUILD_ID" ]] && IS_TRAVIS="TRUE" || IS_TRAVIS="FALSE"
-
-msgPrefix="⬤ BUILD.SH : "
-
-function run_tests {
-  local rest_args=
+[[ -n "$TRAVIS_BUILD_ID" ]] && IS_TRAVIS="TRUE" || IS_TRAVIS="FALSE"['', 'msgPrefix="⬤ BUILD.SH  "', '', 'function run_tests {', '  local rest_args=', '  local ws_args=', '  if [ $# - eq 2  then', '    rest_args"$1"', '    ws_args"$2"', '    if  -z "$rest_args"  then', '       &', '      local rest_pid$!', '    fi', '    if - z "$ws_args" then', '     &', '      local ws_pid$!', '     fi', '  fi']  local rest_args=
   local ws_args=
   if [ $# -eq 2 ]; then
     rest_args="$1"
