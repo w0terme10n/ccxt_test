@@ -73,6 +73,21 @@ build_and_test_all () {
       #     exit 1
       #   fi
       #   cd  ..
+      # fi[' fi', ' npm run test-base', ' npm run test-base-ws', ' last_commit_message=$(git log -1 --pretty=%B)', ' echo "Last commit: $last_commit_message"  for debugging', ' if [[ "$last_commit_message" == *"skip-tests"* ]]; then', ' echo "[SKIP-TESTS] Will skip tests!"', ' exit', ' run_tests', ' fi', ' exit', '}', '', '### CHECK IF THIS IS A PR ###', '# for appveyor when PR is from fork APPVEYOR_REPO_BRANCH is "master" and "APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" is branch name. if PR is from same repo only APPVEYOR_REPO_BRANCH is set and it is branch name', 'if { [ "$IS_TRAVIS" = "TRUE" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ];  [ "$IS_TRAVIS" != "TRUE" ] && [ -z "$APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH" ]; }; then', '', 'echo "$msgPrefix This is a master commit (not a PR) will build everything"', 'build_and_test_all', 'fi', '', '##### DETECT CHANGES #####', '# in appveyor there is no origin/master locally so we need to fetch it.', 'if [[ "$IS_TRAVIS" != "TRUE" ]]; then', "git remote set-branches origin 'master'", 'git fetch --depth=1 --no-tags', 'fi', '', 'diff=$(git diff origin/master --name-only)', 'temporarily remove the below scripts from diff', 'diff=$(echo "$diff"  sed -e "s/^build\\.sh//")', 'diff=$(echo "$diff"  sed -e "s/^skip\\-tests\\.json//")', 'diff=$(echo "$diff"  sed -e "s/^ts\\/src\\/test\\/static.*json//")  remove static tests and markets', ' diff=$(echo "$diff"  sed -e "s/^\\.travis\\.yml//")', ' diff=$(echo "$diff"  sed -e "s/^package\\-lock\\.json//")', ' diff=$(echo "$diff"  sed -e "s/python\\/qa\\.py//")', ' echo $diff', '', "critical_pattern='Client(Trait)?\\.php|Exchange\\.php|\\/base|^build|static_dependencies|^run-tests|package(-lock)?\\.json|composer\\.json|ccxt\\.ts|__init__.py|test'  add \\/test|", 'if [[ "$diff"  $critical_pattern ]]; then', 'echo "$msgPrefix Important changes detected  doing full build & test"', 'echo "$diff"', 'build_and_test_all', 'fi', '', 'echo "$msgPrefix Unimportant changes detected  build & test only specific exchange(s)"', 'readarray -t y <<<"$diff"', "rest_pattern='ts\\/src\\/([A-Za-z0-9_-]+).ts'  \\w not working for some reason", "ws_pattern='ts\\/src\\/pro\\/([A-Za-z0-9_-]+)\\.ts'", '', 'REST_EXCHANGES=()', 'WS_EXCHANGES=()', 'for file in "${y[@]}"; do', ' if [[ "$file"  $rest_pattern ]]; then', 'modified_exchange="${BASH_REMATCH[1]}"', 'REST_EXCHANGES+=($modified_exchange)', ' elif [[ "$file"  $ws_pattern ]]; then', ' modified_exchange="${BASH_REMATCH[1]}"', 'WS_EXCHANGES+=($modified_exchange)']      # if [ $(("${merged_pull_request:0-1}" % 3)) -eq 0 ]; then
+      #   # update pyenv
+      #   (cd "$(pyenv root)" && git pull -q origin master)
+      #   # install python interpreters
+      #   pyenv install -s 3.7.17
+      #   pyenv install -s 3.8.18
+      #   pyenv install -s 3.9.18
+      #   pyenv install -s 3.10.13
+      #   pyenv install -s 3.11.6
+      #   pyenv global 3.7 3.8 3.9 3.10 3.11
+      #   cd python
+      #   if ! tox run-parallel; then
+      #     exit 1
+      #   fi
+      #   cd  ..
       # fi
     fi
     npm run test-base
